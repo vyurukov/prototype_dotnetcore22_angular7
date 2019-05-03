@@ -21,7 +21,6 @@ export class DataService {
   private getJson(path: string): Observable<HttpResponse<string>> {
     var headers: HttpHeaders = new HttpHeaders();
     headers = headers.append("Content-Type", DataService.jsonContentType);
-    headers = headers.append("Accept", '*/*');
 
     var options = {
       headers: headers
@@ -63,18 +62,17 @@ export class DataService {
     return this.http.delete<HttpResponse<string>>(path, options);
   }
 
-  public getPersonDetails(): Observable<Talent> {
+  public getPersonDetails(): Observable<string[]> {
     var headers: HttpHeaders = new HttpHeaders();
     headers = headers.append("Content-Type", DataService.jsonContentType);
-    //headers = headers.append("Authorization", "Bearer " + DataService.jsonContentType);
     headers = headers.append("Accept", '*/*');
 
     var options = {
       headers: headers
     };
 
-    const path = `${this.baseUrl}/api/talent/getpersondetails`;
-    return this.http.get<Talent>(path, options)
+    const path = `${this.baseUrl}/api/values/get`;
+    return this.http.get<string[]>(path, options)
       .pipe(
         map(response => response),
         catchError((error: any) => observableThrowError(error || 'Server error')));

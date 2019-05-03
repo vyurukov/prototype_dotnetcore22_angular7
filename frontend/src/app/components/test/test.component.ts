@@ -10,7 +10,7 @@ import { Talent } from 'src/app/talent/talent.type';
 })
 export class TestComponent implements OnInit {
   subscriptionProfile: Subscription;
-  private talent: Talent;
+  private values: string[];
   
   constructor(private dataService: DataService) { }
 
@@ -18,7 +18,7 @@ export class TestComponent implements OnInit {
     this.subscriptionProfile = this.dataService.getPersonDetails()
         .subscribe(
           result => {
-            this.talent = result;
+            this.values = result;
           },
           error => {
             console.log(error);

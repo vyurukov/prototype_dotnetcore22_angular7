@@ -8,7 +8,7 @@ APP_SETTINGS.instance = "https://login.microsoftonline.com/";
 APP_SETTINGS.tenantId = "f2d6f0c4-6853-4a0d-adc2-6c9a01566442";
 APP_SETTINGS.clientId = "51516284-d004-4151-9816-397162701253";
 APP_SETTINGS.redirectUri = "http://localhost:4200/";
-APP_SETTINGS.baseUrl = "https://localhost:44343";
+APP_SETTINGS.baseUrl = "https://localhost:44364";
 
 if (environment.production) {
   enableProdMode();
@@ -16,7 +16,7 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.error(err));
 
-// fetch('http://localhost:5858/api/settings/get')
+// fetch('https://localhost:44364/api/settings/get')
 // .then(res => res.json())
 // .then(settings => {
 //   console.log(`Settings from API (settings): `, settings);

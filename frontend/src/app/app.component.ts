@@ -11,27 +11,27 @@ export class AppComponent {
   user: any;
 
   constructor(
-    // private broadcastService: BroadcastService,
-    // private authService: MsalService
+    private broadcastService: BroadcastService,
+    private authService: MsalService
     ) {
   }
 
   ngOnInit(): void {
-    //this.user = this.authService.getUser();
-    // this.subscription = this.broadcastService.subscribe("msal:loginSuccess", 
-    //   (payload) => {
-    //     console.log("login success " + JSON.stringify(payload));    
-    //     this.loggedIn = true;
-    //     this.user = this.authService.getUser();
-    //   });  
+    this.user = this.authService.getUser();
+    this.subscription = this.broadcastService.subscribe("msal:loginSuccess", 
+      (payload) => {
+        console.log("login success " + JSON.stringify(payload));    
+        this.loggedIn = true;
+        this.user = this.authService.getUser();
+      });  
   }
   
-  //ngOnDestroy() {
-  //  // disconnect from broadcast service on component destroy
-  //  this.broadcastService.getMSALSubject().next(1);
-  //  if (this.subscription) {
-  //    this.subscription.unsubscribe();
-  //  }
-  //}
+  ngOnDestroy() {
+   // disconnect from broadcast service on component destroy
+   this.broadcastService.getMSALSubject().next(1);
+   if (this.subscription) {
+     this.subscription.unsubscribe();
+   }
+  }
 
 }

@@ -40,7 +40,7 @@ export function loggerCallback(logLevel, message, piiEnabled) {
         popUp: false,
         consentScopes: ["openid"],
         unprotectedResources: [],
-        protectedResourceMap: [ ['https://localhost:44343/', ['user.read']] ],
+        protectedResourceMap: [ ['https://localhost:44364/', ['user.read']] ],
         cacheLocation: "localStorage",
         logger: loggerCallback,
         correlationId: "1000",
