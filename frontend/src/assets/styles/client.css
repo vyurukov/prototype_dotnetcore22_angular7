@@ -1,0 +1,137 @@
+.header {
+    height: 64px;
+    width: 100%;    
+}
+
+.logo{
+    float: left;
+    padding: 20px;
+}
+
+.mdl-grid, .mdl-cell{
+    max-width: 840px;
+}
+
+.main {
+    display: flex;
+}
+
+.main-cell {
+    text-align: left;
+}
+
+.mdl-field-title {
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 14px;
+    color: #37454D;
+    text-align: left;
+    line-height: 18px;
+}
+
+input.k-textbox, .k-dropdown, input.k-textbox:hover, .k-dropdown:hover, input.k-textbox:focus, .k-dropdown:focus {
+    font-family: Arial;
+    font-size: 16px;
+    color: #37454D;
+    text-align: left;
+    border: 1px solid #005f81;
+}
+
+input.k-textbox:disabled {
+    background: #eeeeee;
+}
+
+h3{
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 32px;
+    color: #37454D;
+    line-height: 40px;
+    margin: 0px;
+}
+
+h5 {
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 20px;
+    color: #37454D;
+    line-height: 25px;
+    margin-top: 16px;
+}
+
+a {
+    color: #4A32A3;
+    font-weight: 600;
+}
+
+
+/*Nav Menu Styles. These don't work in the navigation.component.css so are being declared globally*/
+
+.k-icon.k-menu-expand-arrow.k-i-arrow-60-down {
+  color: #444;
+}
+
+.k-menu .k-item > .k-link > .k-icon {
+  color: #444;
+}
+
+.k-menu-group .k-item > .k-state-active {
+  background-color: rgb(0, 127, 173);
+}
+
+/*End of nav styles*/
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: inherit;
+}
+
+
+.image-cropper {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid #eee;
+  margin-left: 12px;
+}
+
+.image-cropper-talent-size {
+  width: 100px;
+  height: 100px;
+}
+
+.image-cropper-talentlead-size {
+  width: 90px;
+  height: 90px;
+}
+
+.profile-pic {
+  display: inline;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+.details {
+  background-color: #37454d;
+  color: #ebeced;
+}
+
+  .details a {
+    color: #007fad
+  }
+
+.description {
+  color: grey;
+  font-size: 12px;
+}
+
+.description a, .description a:hover, description a:visited {
+  color: rgb(63,81,181);
+}
+

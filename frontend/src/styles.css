@@ -1,0 +1,6 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import "assets/styles/material.css";
+@import "assets/styles/trivago.css";
+@import "assets/styles/client.css";

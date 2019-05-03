@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <environment include="Development">
+    </environment>
+    <environment exclude="Development">
+    </environment>
+
+    <base href="/">
+    <title>Demo</title>
+</head>
+<body>
+    <header></header>
+    <main>
+        @RenderBody()
+    </main>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

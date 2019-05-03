@@ -1,0 +1,19 @@
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header mdl-color-text--blue-500 mdl-color--white">
+    <div class="mdl-layout__header-row">
+      <div class="mdl-layout-spacer"></div>
+      <span class="mdl-layout-logo">
+        <a href="/">
+          <img class="margin-left" src="/assets/Logo_TalentMatch_RGB.svg" />
+        </a>
+      </span>
+
+      <span id="adminMode" *ngIf="user">{{user.name}}</span>
+
+      <div class="mdl-layout-spacer"></div>
+    </div>
+  </header>
+  <main class="mdl-layout__content mdl-color--grey-50">
+      <router-outlet></router-outlet>
+  </main>
+</div>
