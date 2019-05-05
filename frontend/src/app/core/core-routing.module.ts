@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './notfound/notfound.component';
-import { MsalGuard } from '@azure/msal-angular';
+import { AuthenticationGuard } from 'microsoft-adal-angular6';
 
 const routes: Routes = [
     {
@@ -11,13 +11,8 @@ const routes: Routes = [
     },
     {
         path: 'talent',
-        canActivate: [MsalGuard],
+        canActivate: [AuthenticationGuard],
         loadChildren: '../talent/talent.module#TalentModule'
-    },
-    {
-        path: 'talent-lead',
-        canActivate: [MsalGuard],
-        loadChildren: '../talent-lead/talent-lead.module#TalentLeadModule'
     },
     {
         path: '**',
@@ -30,7 +25,7 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
       providers: [
-        [MsalGuard]
+        [AuthenticationGuard]
       ],
 })
 export class CoreRoutingModule { }

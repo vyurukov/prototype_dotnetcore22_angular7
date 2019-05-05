@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Backend.Helpers;
-using Backend.Models;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Backend.Controllers.Api
+﻿namespace Backend.Controllers.Api
 {
+    using System;
+    using Backend.Models;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+
     [Produces("application/json")]
     [Route("api/settings/")]
     public class SettingsController : Controller
     {
 
-        public SettingsController()
+        public SettingsController(IConfiguration configuration)
         {
+            this._configuration = configuration;
         }
+
+        private IConfiguration _configuration { get; }
 
         [HttpGet("Get")]
         public IActionResult Get()
@@ -23,40 +23,12 @@ namespace Backend.Controllers.Api
             IActionResult result = this.StatusCode(500);
             string message = string.Empty;
 
+            var model = new FrontendSettings();
+
             try
             {
 
-                var model = new List<SettingItemViewModel>();
-
-                model.Add(new SettingItemViewModel()
-                {
-                    Setting = "instance",
-                    Value = SettingsHelper.AppSetting["AzureAd:Instance"]
-                });
-
-                model.Add(new SettingItemViewModel()
-                {
-                    Setting = "tenantId",
-                    Value = SettingsHelper.AppSetting["AzureAd:TenantId"]
-                });
-
-                model.Add(new SettingItemViewModel()
-                {
-                    Setting = "clientId",
-                    Value = SettingsHelper.AppSetting["AzureAd:ClientId"]
-                });
-
-                model.Add(new SettingItemViewModel()
-                {
-                    Setting = "redirectUri",
-                    Value = SettingsHelper.AppSetting["Angular:RedirectUri"]
-                });
-
-                model.Add(new SettingItemViewModel()
-                {
-                    Setting = "baseUrl",
-                    Value = SettingsHelper.AppSetting["Angular:BaseUrl"]
-                });
+                this._configuration.GetSection("AzureAd").Bind(model);
 
                 result = this.Ok(model);
             }

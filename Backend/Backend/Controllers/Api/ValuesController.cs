@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,8 +12,8 @@ namespace Backend.Controllers
     
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    //[Authorize(AuthenticationSchemes = "AzureADBearer")]
+    //[Authorize]
+    [Authorize(AuthenticationSchemes = "Azures")]
     public class ValuesController : ControllerBase
     {
         // GET api/values

@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BroadcastService, MsalService } from '@azure/msal-angular';
+import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
+import { APP_SETTINGS } from './core/types/settings';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,30 +10,15 @@ import { BroadcastService, MsalService } from '@azure/msal-angular';
 export class AppComponent {
   subscription: any;
   loggedIn: boolean;
-  user: any;
+  userName: any;
 
-  constructor(
-    private broadcastService: BroadcastService,
-    private authService: MsalService
-    ) {
+  constructor(private adalSvc: MsAdalAngular6Service) {
+    this.adalSvc.acquireToken(APP_SETTINGS.instance).subscribe((resToken: string) => {
+      console.log(resToken);
+    });
   }
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
-    this.subscription = this.broadcastService.subscribe("msal:loginSuccess", 
-      (payload) => {
-        console.log("login success " + JSON.stringify(payload));    
-        this.loggedIn = true;
-        this.user = this.authService.getUser();
-      });  
+    this.userName = this.adalSvc.LoggedInUserName;
   }
-  
-  ngOnDestroy() {
-   // disconnect from broadcast service on component destroy
-   this.broadcastService.getMSALSubject().next(1);
-   if (this.subscription) {
-     this.subscription.unsubscribe();
-   }
-  }
-
 }

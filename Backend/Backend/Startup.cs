@@ -31,54 +31,38 @@ namespace Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
-
             services.AddCors();
 
-            services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
-                .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("AzureAd:TenantId", string.Empty));
 
-            //var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("AzureAd:TenantId", string.Empty));
+            services
+                .AddAuthentication("Azures")
+                .AddPolicyScheme("Azures", "Authorize AzureAd or AzureAdBearer", options =>
+                {
+                    options.ForwardDefaultSelector = context =>
+                    {
+                        var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
+                        if (authHeader?.StartsWith("Bearer") == true)
+                        {
+                            return AzureADDefaults.JwtBearerAuthenticationScheme;
+                        }
 
-            //services
-            //    .AddAuthentication(o => {
-            //        o.DefaultScheme = AzureADDefaults.BearerAuthenticationScheme;
-            //        o.DefaultAuthenticateScheme = AzureADDefaults.AuthenticationScheme;
-            //    })
-            //    //.AddAuthentication("Azures")
-            //    //.AddPolicyScheme("Azures", "Authorize AzureAd or AzureAdBearer", options =>
-            //    //{
-            //    //    options.ForwardDefaultSelector = context =>
-            //    //    {
-            //    //        var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
-            //    //        if (authHeader?.StartsWith("Bearer") == true)
-            //    //        {
-            //    //            return AzureADDefaults.JwtBearerAuthenticationScheme;
-            //    //        }
-
-            //    //        return AzureADDefaults.AuthenticationScheme;
-            //    //    };
-            //    //})
-            //    .AddAzureAD(options => Configuration.Bind("AzureAd", options))
-            //    .AddAzureADBearer(options => Configuration.Bind("AzureAdBearer", options));
-            //    //.AddJwtBearer(x =>
-            //    //{
-            //    //    x.RequireHttpsMetadata = false;
-            //    //    x.SaveToken = true;
-            //    //    x.TokenValidationParameters = new TokenValidationParameters
-            //    //    {
-            //    //        ValidateIssuerSigningKey = true,
-            //    //        IssuerSigningKey = new SymmetricSecurityKey(key),
-            //    //        ValidateIssuer = false,
-            //    //        ValidateAudience = false
-            //    //    };
-            //    //});
+                        return AzureADDefaults.AuthenticationScheme;
+                    };
+                })
+                .AddAzureAD(options => Configuration.Bind("AzureAd", options))
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
             services.AddMvc(options =>
             {
@@ -99,14 +83,10 @@ namespace Backend
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseCors(x => x
                 .AllowAnyOrigin()
@@ -115,6 +95,7 @@ namespace Backend
 
             app.UseAuthentication();
 
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
